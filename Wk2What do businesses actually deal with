@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 2 · Day 1 — What Do Businesses Actually Deal In?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.3rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>What Do Businesses Actually Deal In?</h1>
+  <div class="sub">Week 2 · Day 1 — Unit IV: Economics</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Opening Hook</div>
+  <div class="ts-di">11:00–29:00<br>DI Instruction</div>
+  <div class="ts-practice">29:00–40:00<br>Practice / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Introduces the vocabulary this whole week runs on (business, goods, services, consumer, profit, resources) and opens the two BMG blocks Week 2 builds: Revenue Streams (what a business earns) and Cost Structure (what it costs to provide). Backwards Design goal: students apply scarcity, resource allocation, and competition to real spending decisions.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Opening Hook</h2>
+
+<div class="note iefa">
+  <span class="label">IEFA Connection</span>
+  Resource scarcity is not a new idea on the reservation — decisions about limited land, water, and seasonal resources have always required real economic reasoning, not textbook theory. Set this up now; it becomes the anchor for Day 3's fluency work.
+</div>
+
+<div class="script">
+  <p class="t">Quick question before we define anything: name one thing your family has had to make a choice about because there wasn't enough of it — time, money, water, land, anything.</p>
+  <p class="a">Take 3–4 shares. Don't over-explain yet — just collect real answers.</p>
+  <p class="t">Every one of those is an example of <span class="k">limited resources</span> — and managing limited resources well isn't new to this community. It's something Blackfeet families have done with land, water, and seasonal resources for generations. Businesses run into the exact same problem. Today we get the vocabulary for it.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — I Do / We Do / You Do</h2>
+
+<h3 class="subsection">I Do — Core Vocabulary</h3>
+<div class="script">
+  <p class="t">A <span class="k">business</span> sells <span class="k">goods</span> — things you can hold — or <span class="k">services</span> — things someone does for you. The person who buys them is the <span class="k">consumer</span>. What's left over after a business pays its costs is <span class="k">profit</span>. And <span class="k">economics</span> is just the study of how people make decisions with limited resources.</p>
+  <p class="t">Say it with me:</p>
+  <p class="cr">"Goods you hold. Services someone does."</p>
+  <p class="t">There are three kinds of <span class="k">resources</span> every business needs: natural resources, human resources — that's people and labor — and capital resources, meaning money and equipment. All three are <span class="k">limited</span>. That's the whole problem economics exists to solve.</p>
+</div>
+
+<h3 class="subsection">We Do — Wants vs. Needs Sort</h3>
+<div class="script">
+  <p class="t">I'll name something. Thumbs up if it's a need, thumbs down if it's a want.</p>
+  <p class="a">Call out: water, a new phone, food, name-brand shoes, shelter, video games, medicine, a second car. Discuss any split votes — needs vs. wants gets genuinely blurry for some of these, and that's the point.</p>
+  <p class="t">Businesses have to fulfill needs first — because of limited resources, they can't do everything. Only once needs are covered does chasing wants make sense.</p>
+</div>
+
+<div class="note channel">
+  <span class="label">Learning Channel</span>
+  Hear/Do (vocabulary chorus) into See/Say (thumbs sort) — keeps this from becoming a lecture-only day even though it's vocabulary-heavy.
+</div>
+
+<h3 class="subsection">You Do — Guided Practice</h3>
+<div class="script">
+  <p class="t">In your workbook — for each business listed, mark whether it fulfills a want or a need, and whether it sells a good or a service. Some might do both.</p>
+  <p class="a">List: Spa, Buffalo Wild Wings, Roofing Company, Goodwill, Movie Theater, Dillons, Cell Phone Repair Store, Pet Grooming Store, Hospital. Circulate — expect real debate on several of these (is a movie theater a want or... entertainment as a need for mental health? Let students argue it out.)</p>
+</div>
+
+<div class="note comprehension">
+  <span class="label">Comprehension Tip</span>
+  This matrix is where students either genuinely reason through the want/need distinction or just guess quickly to finish. Cold-call a few "why" questions on the debatable ones (Goodwill, Movie Theater) rather than just checking for completion.
+</div>
+
+<h2 class="section">29:00–40:00 · Practice — Two Tracks Running Concurrently</h2>
+
+<h3 class="subsection">Main Class — Independent Practice</h3>
+<p>Students finish the business matrix, then answer: "What do businesses try to fulfill for consumers?" and "What are the three resources?" in their workbook — direct application of today's I Do content.</p>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "What I Earn" (Revenue, Simple Money Math)</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">A business sells things to earn money. That money is called revenue. Let's practice — if you sell one bracelet for $5, how much money do you earn?</p>
+    <p class="s">[$5]</p>
+    <p class="t">If you sell two bracelets for $5 each, how much?</p>
+    <p class="a">Use physical play money and real objects (or pictures of objects) — keep numbers small and concrete, build up one bracelet at a time rather than jumping to abstract totals.</p>
+  </div>
+  <div class="note autism" style="margin-top:14px;">
+    <span class="label">Autism Observation Tip</span>
+    If a student wants to know exactly why $5 and not another number, that's a fair question — give a simple, real reason ("that's what people are willing to pay for a bracelet like this") rather than "just because."
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">One sentence: what's one thing a business has to fulfill first — a want, or a need — and why?</p>
+  <p class="a">Not Yet / Developing / Fluent per student.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>Managing Limited Resources Is Already Familiar</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. The choices you named at the start of class — about time, water, land, money — those weren't hypothetical. That's real economic reasoning, and you were already doing it before we put a name on it today.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 2 · Day 2 — The $500 Problem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.4rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .choice-moment { border:3px solid var(--accent-gold); border-radius:10px; padding:18px 20px; margin:16px 0; background:#FBF3E3; }
+  .choice-moment .cm-label { font-family:'Playfair Display',serif; color:var(--accent-gold); font-weight:700; font-size:1rem; margin-bottom:6px; display:block; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>The $500 Problem</h1>
+  <div class="sub">Week 2 · Day 2 — Unit IV: Economics — Limited Resources in Practice</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Choral Recall</div>
+  <div class="ts-di">11:00–29:00<br>DI Instruction</div>
+  <div class="ts-practice">29:00–40:00<br>Budget Decision / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Direct application of yesterday's vocabulary — students apply scarcity and resource allocation to one concrete decision, not abstract definitions.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Choral Recall</h2>
+<div class="script">
+  <p class="t">Yesterday — goods are...</p>
+  <p class="cr">"Things you hold."</p>
+  <p class="t">Services are...</p>
+  <p class="cr">"Things someone does."</p>
+  <p class="t">And businesses have to fulfill what first — wants, or needs?</p>
+  <p class="cr">"Needs."</p>
+  <p class="t">Today you're the one making that call — with real numbers.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — The Budget Scenario</h2>
+
+<h3 class="subsection">I Do — Setting the Scenario</h3>
+<div class="script">
+  <p class="t">You're the manager of a burger fast-food joint. You're running low on hamburger patties. You'd also like to get your employees new uniforms. You have exactly $500 left in your monthly budget — not a dollar more. What do you spend it on?</p>
+  <p class="a">Let the tension sit for a second before moving on — don't rush to resolve it.</p>
+</div>
+
+<h3 class="subsection">We Do — Working Through the Trade-Off</h3>
+<div class="script">
+  <p class="t">Which one is a need for this business to keep running — patties, or uniforms?</p>
+  <p class="s">[patties]</p>
+  <p class="t">Right — without patties, you can't sell burgers at all. That's <span class="k">scarcity</span> forcing a real decision. Uniforms matter, but they're not stopping the business from operating today. This is what economists call <span class="k">opportunity cost</span> — say it with me:</p>
+  <p class="cr">"What you give up to get something else."</p>
+  <p class="t">The opportunity cost of buying patties is... the new uniforms, at least for now.</p>
+</div>
+
+<div class="note channel">
+  <span class="label">Learning Channel</span>
+  Think/Say — this scenario is deliberately uncomfortable (there's a real cost to the "right" answer) so opportunity cost isn't just a vocabulary word, it's a felt trade-off.
+</div>
+
+<h3 class="subsection">You Do — Guided Practice</h3>
+<div class="script">
+  <p class="t">In your workbook: why is competition good for businesses and consumers? And then — true or false — work through the statement list.</p>
+  <p class="a">True/False set: businesses decide what to provide based on what you want and need; your wants never change; the motive of business is to make profit and add value to society; businesses help the economy by providing jobs; it's important to make good decisions in business; you're a consumer if you purchase and use a product/service; a company can survive without profit; businesses are hurt by competition.</p>
+</div>
+
+<div class="note comprehension">
+  <span class="label">Comprehension Tip</span>
+  "A company can survive without profit" and "your wants never change" are the two most likely to get a rushed guess. Push for the reasoning on both — these are the statements that actually test understanding, not recall.
+</div>
+
+<h2 class="section">29:00–40:00 · Practice — Two Tracks Running Concurrently</h2>
+
+<h3 class="subsection">Main Class — Independent Practice</h3>
+<p>Finish the true/false set. Early finishers: think about a time your own family had to choose between two needs at once — what did you pick, and what was the opportunity cost? (No submission required — oral rehearsal for Day 4.)</p>
+
+<div class="choice-moment">
+  <span class="cm-label">Choice Moment</span>
+  If you were the manager, would you split the $500 unevenly instead of picking just one — and if so, how? Genuinely open; there's no single correct split, only a defensible one.
+</div>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "Only Enough for One" (Simple Scarcity)</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">You have enough money for one thing. A snack, or a toy. Which do you need more today?</p>
+    <p class="a">Use two picture cards (food, toy) and real or play money in a small, fixed amount. Repeat with a second pair (water bottle vs. sticker) to build the pattern before moving to the business framing.</p>
+    <p class="t">A business has the same problem. Only enough money for one thing. They have to pick the need first.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">One sentence: if you only had enough money for one thing, how do you decide which one to pick?</p>
+  <p class="a">Not Yet / Developing / Fluent per student.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>Choosing Well Under Pressure Is a Skill</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. Today's decision wasn't easy on purpose. Real business owners face exactly this kind of pressure — and so does anyone managing a household with limited resources. You already know how to do this.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 2 · Day 3 — Managing What's Limited</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.3rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .fluency-table { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  .fluency-table th, .fluency-table td { border:1px solid var(--lavender); padding:9px 10px; text-align:left; }
+  .fluency-table th { background:var(--lavender-light); font-family:'Source Code Pro',monospace; font-size:.78rem; text-transform:uppercase; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>Managing What's Limited</h1>
+  <div class="sub">Week 2 · Day 3 — Precision Teaching Fluency Day + IEFA: Reservation Resource Stewardship</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Choral Recall</div>
+  <div class="ts-di">11:00–29:00<br>Stewardship Mini-Lesson + Fluency Rounds</div>
+  <div class="ts-practice">29:00–40:00<br>Round 3 / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Precision Teaching day — no new content, fluency (accuracy + speed) on Week 2 vocabulary: business, goods, services, consumer, profit, resources, scarcity, opportunity cost. Anchored in a real, local example so "scarcity" isn't abstract, the same way Week 1's Day 3 used dentalium for "value."
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Choral Recall</h2>
+<div class="script">
+  <p class="t">Quick fire. Scarcity means...</p>
+  <p class="cr">"Not enough of something to go around."</p>
+  <p class="t">Opportunity cost means...</p>
+  <p class="cr">"What you give up to get something else."</p>
+  <p class="t">Today, no new ideas — just getting fast and accurate.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · Stewardship Mini-Lesson + Fluency Rounds</h2>
+
+<div class="note iefa">
+  <span class="label">IEFA Connection — Resource Stewardship on the Reservation</span>
+  Managing limited land, water, and seasonal resources has always required real economic decision-making within the Blackfeet Nation — this is not a hypothetical exercise for this community, it's lived practice. Keep specifics general at this stage; verify any current, specific claims (water rights status, particular land-use policy details) with a community or tribal source before stating them as fact in the final script — I have not independently verified those specifics.
+</div>
+
+<h3 class="subsection">I Do — Scarcity Isn't New Here</h3>
+<div class="script">
+  <p class="t">This whole week we've been talking about scarcity like it's a business school idea. It's not new. Blackfeet families and the Nation as a whole have managed limited land, water, and seasonal resources for generations — deciding what to use now, what to hold back, and how to make what's limited last.</p>
+  <p class="t">That's the same skill as the $500 problem from yesterday. Different scale, same reasoning: what matters most right now, with what we actually have.</p>
+  <p class="a">If you have a specific, verified local or family example you're comfortable sharing (seasonal resource decisions, land use, water), this is the moment for it — a real family or community example will land far better than a general statement.</p>
+</div>
+
+<h3 class="subsection">Precision Teaching — Three-Round Fluency Structure</h3>
+<div class="script">
+  <p class="a"><span class="k">Round 1 — With Support:</span> Word wall visible (business, goods, services, consumer, profit, resources, scarcity, opportunity cost). Call a term, students respond chorally, checking wall as needed.</p>
+  <p class="a"><span class="k">Round 2 — Without Support:</span> Cover the word wall. Timed — 60 seconds. Call terms rapid-fire, individual students respond, log speed and accuracy.</p>
+</div>
+
+<div class="fluency-table">
+  <tr><th>Round</th><th>Support</th><th>Timing</th><th>Response Mode</th></tr>
+  <tr><td>1</td><td>Word wall visible</td><td>Untimed</td><td>Choral</td></tr>
+  <tr><td>2</td><td>None</td><td>60 sec, timed</td><td>Individual, cold-call</td></tr>
+  <tr><td>3</td><td>None</td><td>Untimed</td><td>Peer partner quiz</td></tr>
+</div>
+
+<div class="note adhd">
+  <span class="label">ADHD Observation Tip</span>
+  Same as Week 1 Day 3 — the timer in Round 2 can spike blurting. Keep the visible "hands down, wait for your name" cue consistent across both fluency days so it's a familiar routine by now, not a new rule to relearn.
+</div>
+
+<h2 class="section">29:00–40:00 · Round 3 — Peer Identification / SPED Pull-Aside</h2>
+
+<h3 class="subsection">Main Class — Round 3</h3>
+<div class="script">
+  <p class="t">Partner up, quiz each other on all eight terms. If your partner's stuck, ask a question that helps them find the answer — don't just give it to them.</p>
+  <p class="a">Circulate and log Not Yet/Developing/Fluent per student based on Rounds 2 and 3 combined.</p>
+</div>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "Enough for Now" (Stewardship, Concrete)</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level. Untimed, repeated practice reps.</p>
+  <div class="sped-script">
+    <p class="t">Some things run out if you use too much too fast — water, food, time. What is something that can run out if you're not careful?</p>
+    <p class="s">[names something]</p>
+    <p class="t">Taking care of something so it lasts is called stewardship. Families here have done that with land and water for a long time.</p>
+    <p class="a">Return to Day 1's $5-bracelet math — connect: "If you only had a few bracelets to sell, would you sell them all at once, or save some for later?" Reinforces limited-resource reasoning without new vocabulary load.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">Fast round, no writing: I say a term, you say the definition.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>Stewardship Is Economic Reasoning</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. Managing what's limited isn't a school subject you're learning from scratch. It's something this community has practiced for generations. Tomorrow you start your own research — looking at how businesses actually price things.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 2 · Day 4 — Why Isn't It the Same Price Everywhere?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.2rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .workbook-box { border:2px dashed var(--lavender-dark); border-radius:10px; padding:18px 20px; margin:16px 0; background:var(--lavender-light); }
+  .workbook-box .wb-label { font-family:'Source Code Pro',monospace; font-size:.75rem; text-transform:uppercase; color:var(--lavender-dark); margin-bottom:8px; display:block; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>Why Isn't It the Same Price Everywhere?</h1>
+  <div class="sub">Week 2 · Day 4 — Price-Comparison Research Begins</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Choral Recall</div>
+  <div class="ts-di">11:00–29:00<br>DI Instruction</div>
+  <div class="ts-practice">29:00–40:00<br>Begin Research / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  This launches the Week 2 end-of-week artifact — completed price-comparison research, which feeds Week 6's pricing decisions. Today students choose an item and begin the research; Day 5 finalizes it.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Choral Recall</h2>
+<div class="script">
+  <p class="t">This week — scarcity means...</p>
+  <p class="cr">"Not enough of something to go around."</p>
+  <p class="t">Today we ask a real question: does the exact same item cost the exact same amount everywhere?</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — Why Prices Differ</h2>
+
+<h3 class="subsection">I Do — Setting the Task</h3>
+<div class="script">
+  <p class="t">Think of one item you actually love — something you'd buy without thinking twice. You're going to go find it online, at three different sites, and write down the price at each one.</p>
+  <p class="a">Model your own example quickly on the board — search one product, show the first result, model writing down the price and link.</p>
+</div>
+
+<h3 class="subsection">We Do — Predicting Why Prices Differ</h3>
+<div class="script">
+  <p class="t">Before you search — guess with me. Why might the exact same item cost different amounts at different stores?</p>
+  <p class="a">Take several guesses, write on board without confirming yet: shipping costs, store overhead, competition, brand reputation, sales/discounts, bulk buying power.</p>
+  <p class="t">All of those are real reasons. This connects straight back to <span class="k">competition</span> — when businesses compete for the same customer, price is one of the biggest ways they compete.</p>
+</div>
+
+<div class="note channel">
+  <span class="label">Learning Channel</span>
+  Think/Say (prediction) before Think/Do (research) — students commit to a guess before they search, so the research actually tests their thinking instead of being a blind data-collection task.
+</div>
+
+<h3 class="subsection">You Do — Begin Research</h3>
+<div class="script">
+  <p class="t">Find your item, then find the exact same item on two other sites. Write down the price and the link for all three.</p>
+  <p class="a">Since AI tools are blocked district-wide, this is straightforward web search on approved sites — model the search process once if students are unfamiliar with comparing listings.</p>
+</div>
+
+<div class="note adhd">
+  <span class="label">ADHD Observation Tip</span>
+  Open-ended web research is a common derailment point — the freedom to pick "anything you love" can spiral into browsing unrelated items. A visible timer for the research block and a check-in halfway through helps more than repeated verbal redirects.
+</div>
+
+<h2 class="section">29:00–40:00 · Research Time — Two Tracks Running Concurrently</h2>
+
+<h3 class="subsection">Main Class — Independent Research</h3>
+<p>Students complete the three-site price search. Early finishers begin drafting: are the prices different? If yes, why do they think so (at least two paragraphs' worth of reasoning by tomorrow). If no, why do they think the prices matched exactly?</p>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "Same Thing, Different Price?"</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">I found the same snack at two stores. Look — one costs more than the other. Why do you think that happens?</p>
+    <p class="a">Bring two real or printed examples of the same simple item (a candy bar, a drink) at two different visible prices — physical props work better than abstract discussion here.</p>
+    <p class="s">[guesses — one store is bigger, one is closer, etc.]</p>
+    <p class="t">You're right — stores make different choices, and that changes the price.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">One sentence: what item did you pick, and were the three prices the same or different?</p>
+  <p class="a">Not Yet / Developing / Fluent per student.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>You're Already Thinking Like a Consumer and a Business Owner</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. Every time you compare prices before you buy something, you're already doing the exact reasoning a business owner does when they set their own prices. Tomorrow you finish the research and write it up.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 2 · Day 5 — Finishing the Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.4rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:32px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.05rem; max-width:660px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>Finishing the Research</h1>
+  <div class="sub">Week 2 · Day 5 — Portfolio Piece, Preview of Week 3</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Week 2 Recap</div>
+  <div class="ts-di">11:00–29:00<br>Finish Research Write-Up</div>
+  <div class="ts-practice">29:00–40:00<br>Share Out / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Preview Week 3</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Finalizes the Week 2 end-of-week artifact — completed price-comparison research — for the running Week 1–9 workbook section. Feeds directly into Week 6's pricing decisions.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Week 2 Recap</h2>
+<div class="script">
+  <p class="t">This week: scarcity means?</p>
+  <p class="cr">"Not enough of something to go around."</p>
+  <p class="t">Opportunity cost means?</p>
+  <p class="cr">"What you give up to get something else."</p>
+  <p class="t">And businesses have to fulfill what first?</p>
+  <p class="cr">"Needs."</p>
+  <p class="t">Today we finish proving all three ideas with real research you did yourself.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — Finishing the Write-Up</h2>
+
+<h3 class="subsection">I Do — What a Strong Explanation Looks Like</h3>
+<div class="script">
+  <p class="t">Yesterday you predicted why prices might differ, then you researched. Today you finish two paragraphs: if the prices were different, explain why, using what we've learned this week — scarcity, competition, resources. If the prices were exactly the same, explain why you think that happened instead.</p>
+  <p class="a">Model turning a vague guess ("maybe shipping") into a specific claim tied to vocabulary: "The price is likely higher on Site A because of shipping costs built into the price — that's part of their cost structure, which affects what they need to charge to still make a profit."</p>
+</div>
+
+<h3 class="subsection">We Do — Strengthening Weak Explanations</h3>
+<div class="script">
+  <p class="t">Read this out loud with me — is this a strong explanation or a weak one? "The prices were different because stores are different."</p>
+  <p class="s">[weak — too vague]</p>
+  <p class="t">Right. What's missing?</p>
+  <p class="s">[a specific reason — which term from this week explains it]</p>
+</div>
+
+<div class="note comprehension">
+  <span class="label">Comprehension Tip</span>
+  This is the moment students either connect the week's vocabulary to their own research or write a generic paragraph that could apply to anything. Circulate specifically checking whether their explanation uses at least one term from this week (scarcity, competition, cost structure, resources) — not just checking for two paragraphs of length.
+</div>
+
+<h3 class="subsection">You Do — Final Write</h3>
+<div class="script">
+  <p class="t">Finish your explanation. This is the version that goes in your portfolio and comes back in Week 6 when you price your own idea.</p>
+</div>
+
+<h2 class="section">29:00–40:00 · Voluntary Share-Out / Two Tracks</h2>
+
+<h3 class="subsection">Main Class — Optional Share</h3>
+<p>Ask for 2–3 volunteers to share their item and their explanation. Look for variety in reasoning across shares if possible.</p>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — Finishing the Week</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">This week you learned: things can run out, and the same thing can cost different amounts. Let's put it in one sentence — I looked at [item], and it cost different amounts because [reason].</p>
+    <p class="a">Help each student assemble their own sentence orally, then support them writing or dictating it into the workbook.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check + Preview Week 3</h2>
+<div class="script">
+  <p class="t">Before you log off — next week we stop looking at prices and start looking for opportunities. We're going to find a real need in this community that nobody's fully solved yet. Come back thinking about something that bugs you or someone you know — something that could use a better solution.</p>
+  <p class="a">Not Yet / Developing / Fluent — final Week 2 mark, based on the finished artifact's use of vocabulary and reasoning quality.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>You Just Did Real Market Research</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. What you did this week wasn't a worksheet exercise — you researched, predicted, tested your prediction, and explained it with real reasoning. That's the actual work of running a business. It stays in your workbook, and it comes back when you price your own idea in a few weeks.</p>
+</div>
+
+</div>
+</body>
+</html>
