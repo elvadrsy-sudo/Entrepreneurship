@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 3 · Day 1 — Why We Buy What We Buy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.3rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>Why We Buy What We Buy</h1>
+  <div class="sub">Week 3 · Day 1 — Unit II: Entrepreneurial Trends</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Choral Recall</div>
+  <div class="ts-di">11:00–29:00<br>DI Instruction</div>
+  <div class="ts-practice">29:00–40:00<br>Practice / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Opens two new BMG blocks: Value Propositions and Customer Segments. Backwards Design goal: students identify a real trend or unmet need in their own community and articulate why it creates opportunity. Financial literacy touch this week: I. Earning Income; II. Spending.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Choral Recall</h2>
+<div class="script">
+  <p class="t">Two weeks in a row now — entrepreneur takes on...</p>
+  <p class="cr">"The risk, keeps the reward or the loss."</p>
+  <p class="t">And after Mafia, tell me — opportunity cost means?</p>
+  <p class="cr">"What you give up to get something else."</p>
+  <p class="t">Good — that one stuck. Today's new word is <span class="k">trend</span>. A pattern in what people want, right now, that's changing.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — I Do / We Do / You Do</h2>
+
+<h3 class="subsection">I Do — Trends and Customer Segments</h3>
+<div class="script">
+  <p class="t">A <span class="k">trend</span> is a pattern in what people want. A <span class="k">customer segment</span> is a group of people who buy the same thing — but not always for the same reason.</p>
+  <p class="t">Here's the part that surprises people: two totally different groups can buy the exact same product. Same item, different reasons. That's still two different customer segments.</p>
+  <p class="a">Example: work boots. A rancher buys them for durability on the job. A teenager buys the same brand because they're trending as a style right now. Same boots — two segments, two reasons.</p>
+</div>
+
+<h3 class="subsection">We Do — Sorting Reasons</h3>
+<div class="script">
+  <p class="t">I'll name a product. You tell me two different reasons two different kinds of people might buy it.</p>
+  <p class="a">Examples to use: a pickup truck, a phone case, cowboy boots, a cooler. Push for genuinely different reasons, not just "because they like it" twice.</p>
+  <p class="t">Notice — the product didn't change. The <span class="k">reason</span> changed. That's what a business has to understand about its customers.</p>
+</div>
+
+<div class="note channel">
+  <span class="label">Learning Channel</span>
+  Hear/Say into Think/Say — the sorting exercise is intentionally quick and social before the slower, more personal trend-spotting work begins later this week.
+</div>
+
+<div class="note iefa">
+  <span class="label">IEFA Connection</span>
+  Trends within the Blackfeet Nation specifically — youth-run businesses at powwows, seasonal tourism, and language-revitalization products (things like Blackfoot-language flashcards, apparel, or learning tools) are all real, current, local examples of trends creating opportunity. Good material for tomorrow's deeper dive.
+</div>
+
+<h3 class="subsection">You Do — Guided Practice</h3>
+<div class="script">
+  <p class="t">In your workbook, pick one product and write two different reasons two different people might buy it.</p>
+</div>
+
+<div class="note comprehension">
+  <span class="label">Comprehension Tip</span>
+  Watch for students who write two reasons that are actually the same idea reworded ("they like it" / "they think it's cool"). Push for something concretely different — practical need vs. style, for instance.
+</div>
+
+<h2 class="section">29:00–40:00 · Practice — Two Tracks Running Concurrently</h2>
+
+<h3 class="subsection">Main Class — Independent Practice</h3>
+<p>Students finish their two-reasons write-up, then brainstorm: name one thing that's popular right now among people their age, locally — this seeds Day 2's deeper customer segment work.</p>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "Who I Help" (Value Proposition, Simplified)</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">Different people need help in different ways. If you helped an elder, what would you help with?</p>
+    <p class="s">[names something — carrying, reading, cooking]</p>
+    <p class="t">If you helped a little kid, would it be the same thing?</p>
+    <p class="s">[usually no]</p>
+    <p class="t">Same idea — different people need different things. That's what businesses have to think about too.</p>
+    <p class="a">Use picture cards of different people (elder, young child, peer) — students match a simple "help" picture card to each person, reinforcing that the same helper can serve different people differently.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">One sentence: name one product, and two different reasons two different people might buy it.</p>
+  <p class="a">Not Yet / Developing / Fluent per student.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>You Already Read People</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. Understanding that different people want different things for different reasons isn't a business school skill you're learning from nothing — it's something you already do every day with the people around you. Tomorrow we go deeper.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 3 · Day 2 — Same Product, Different Buyer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.3rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .compare { display:flex; gap:16px; margin:16px 0; }
+  .compare .col { flex:1; border:2px solid var(--lavender-dark); border-radius:10px; padding:16px 18px; background:#fff; }
+  .compare .col h4 { font-family:'Playfair Display',serif; margin:0 0 10px; color:var(--lavender-dark); font-size:1.05rem; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>Same Product, Different Buyer</h1>
+  <div class="sub">Week 3 · Day 2 — Customer Segments in Practice</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Choral Recall</div>
+  <div class="ts-di">11:00–29:00<br>Live Case Study</div>
+  <div class="ts-practice">29:00–40:00<br>Compare Chart / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Direct build on the Backwards Design goal: students see how even people unlike each other can land in the same — or a different — customer segment for the exact same product. Financial literacy touch: II. Spending.
+</div>
+
+<div class="note iefa">
+  <span class="label">IEFA Connection</span>
+  Today's case study uses beadwork — a real product made and sold within the Blackfeet Nation — to show two genuinely different customer segments buying the same kind of item for very different reasons.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Choral Recall</h2>
+<div class="script">
+  <p class="t">Yesterday — customer segment means?</p>
+  <p class="cr">"A group of people who buy the same thing."</p>
+  <p class="t">And two segments can buy the exact same product for...</p>
+  <p class="cr">"Different reasons."</p>
+  <p class="t">Today, one real example — beadwork.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — Live Case Study</h2>
+
+<h3 class="subsection">I Do — Two Buyers, One Product</h3>
+<div class="script">
+  <p class="t">A beadwork artist sells the same style of earrings to two very different customers. Customer one — a community member buying them to wear at a powwow, connected to identity and tradition. Customer two — a tourist passing through, buying them as a souvenir to take home.</p>
+  <p class="a">Ask: same earrings — what's different about why each person is buying them?</p>
+  <p class="t">Same <span class="k">product</span>. Two different <span class="k">customer segments</span>. Community member and tourist — neither one is "more real" as a customer. They just want different things from the same purchase.</p>
+</div>
+
+<h3 class="subsection">We Do — What Changes, What Doesn't</h3>
+<div class="script">
+  <p class="t">Does the artist need to make two different products?</p>
+  <p class="s">[no]</p>
+  <p class="t">What might change about how they talk about the earrings to each customer, even if the product is the same?</p>
+  <p class="a">Take answers — expect: emphasizing meaning/tradition to the community member, emphasizing uniqueness/craftsmanship to the tourist. This is the seed of Value Proposition, coming later in the unit — don't over-teach it yet, just plant it.</p>
+</div>
+
+<div class="note channel">
+  <span class="label">Learning Channel</span>
+  See/Say — a concrete two-buyer example does more work here than an abstract definition. Keep pointing back to "same product, different reason" as the throughline.
+</div>
+
+<h3 class="subsection">You Do — Guided Practice</h3>
+<div class="script">
+  <p class="t">Pick your own local example — something sold here that different kinds of people buy for different reasons. Fill in the comparison chart.</p>
+</div>
+
+<div class="note comprehension">
+  <span class="label">Comprehension Tip</span>
+  If a student picks two "reasons" that are really the same reason worded differently, this is the same gap from Day 1 — circle back with a direct question: "would that person buy it if the other reason didn't exist?"
+</div>
+
+<h2 class="section">29:00–40:00 · Compare Chart — Two Tracks Running Concurrently</h2>
+
+<h3 class="subsection">Main Class — Comparison Chart</h3>
+<div class="compare">
+  <div class="col">
+    <h4>Buyer 1</h4>
+    Who: ____________<br>
+    Why they're buying it: ____________
+  </div>
+  <div class="col">
+    <h4>Buyer 2</h4>
+    Who: ____________<br>
+    Why they're buying it: ____________
+  </div>
+</div>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "Same Thing, Different Reason"</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">Two people can buy the exact same thing for different reasons. Look — here's a picture of earrings. One person wears them because they mean something to their family. Another person buys them because they think they're pretty and want to remember their trip.</p>
+    <p class="a">Use simple picture cards — same earrings image twice, paired with a "home/family" icon and a "traveler/suitcase" icon.</p>
+    <p class="t">Same earrings. Two different reasons. Both are okay.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">One sentence: name a product, and two different reasons two different people might buy it — from a local example, not one I gave you.</p>
+  <p class="a">Not Yet / Developing / Fluent per student.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>What You Sell and Why It Matters Aren't the Same Thing</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. The same thing you make or offer can matter to different people in completely different ways — and both are valid. Tomorrow we slow down and get fast and accurate with everything we've learned so far.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 3 · Day 3 — Trends Already Happening Here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.2rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .fluency-table { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  .fluency-table th, .fluency-table td { border:1px solid var(--lavender); padding:9px 10px; text-align:left; }
+  .fluency-table th { background:var(--lavender-light); font-family:'Source Code Pro',monospace; font-size:.78rem; text-transform:uppercase; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>Trends Already Happening Here</h1>
+  <div class="sub">Week 3 · Day 3 — Precision Teaching Fluency Day + IEFA: Local Trend Examples</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Choral Recall</div>
+  <div class="ts-di">11:00–29:00<br>Local Trends Mini-Lesson + Fluency Rounds</div>
+  <div class="ts-practice">29:00–40:00<br>Round 3 / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Precision Teaching day — fluency (accuracy + speed) on Week 3 vocabulary: trend, customer segment, target audience, opportunity. Anchored in real, current, local trend examples so it isn't abstract. Financial literacy touch: IV. Investing; VI. Managing Risk — spotting a trend early is itself a risk/reward decision.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Choral Recall</h2>
+<div class="script">
+  <p class="t">Quick fire. Trend means?</p>
+  <p class="cr">"A pattern in what people want."</p>
+  <p class="t">Customer segment means?</p>
+  <p class="cr">"A group of people who buy the same thing."</p>
+  <p class="t">Today, no new ideas — just getting fast and accurate.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · Local Trends Mini-Lesson + Fluency Rounds</h2>
+
+<div class="note iefa">
+  <span class="label">IEFA Connection — Real, Current, Local Trends</span>
+  Youth-run businesses at powwows, seasonal tourism tied to the reservation's land and events, and language-revitalization products (Blackfoot-language learning materials, apparel, and tools) are all real, current trends within the Blackfeet Nation — genuine opportunity, not hypothetical examples. If you know of specific current student or community ventures fitting this pattern, they'll land far better here than the general categories alone.
+</div>
+
+<h3 class="subsection">I Do — Trends You Can Actually See</h3>
+<div class="script">
+  <p class="t">A trend isn't something that only happens in big cities or on the internet. Right now, in this community, there are real trends creating real opportunity — youth selling things at powwows, businesses built around seasonal tourism, and a growing interest in Blackfoot-language products — flashcards, apparel, learning tools.</p>
+  <p class="t">Every one of those started because someone noticed a pattern in what people wanted, and acted on it.</p>
+</div>
+
+<h3 class="subsection">Precision Teaching — Three-Round Fluency Structure</h3>
+<div class="script">
+  <p class="a"><span class="k">Round 1 — With Support:</span> Word wall visible (trend, customer segment, target audience, opportunity, value proposition). Call a term, students respond chorally, checking wall as needed.</p>
+  <p class="a"><span class="k">Round 2 — Without Support:</span> Cover the word wall. Timed — 60 seconds. Call terms rapid-fire, individual students respond, log speed and accuracy.</p>
+</div>
+
+<div class="fluency-table">
+  <tr><th>Round</th><th>Support</th><th>Timing</th><th>Response Mode</th></tr>
+  <tr><td>1</td><td>Word wall visible</td><td>Untimed</td><td>Choral</td></tr>
+  <tr><td>2</td><td>None</td><td>60 sec, timed</td><td>Individual, cold-call</td></tr>
+  <tr><td>3</td><td>None</td><td>Untimed</td><td>Peer partner quiz</td></tr>
+</div>
+
+<div class="note adhd">
+  <span class="label">ADHD Observation Tip</span>
+  Same routine as the previous two fluency days — the consistency itself is doing work here. By Week 3, the "hands down, wait for your name" cue should be familiar enough that less redirection is needed. If it's still not landing, that's worth noting for a possible individual accommodation.
+</div>
+
+<h2 class="section">29:00–40:00 · Round 3 — Peer Identification / SPED Pull-Aside</h2>
+
+<h3 class="subsection">Main Class — Round 3</h3>
+<div class="script">
+  <p class="t">Partner up, quiz each other on all five terms. If your partner's stuck, ask a question that helps them find the answer.</p>
+  <p class="a">Circulate and log Not Yet/Developing/Fluent per student based on Rounds 2 and 3 combined.</p>
+</div>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "What's Popular Right Now?"</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level. Untimed, repeated practice reps.</p>
+  <div class="sped-script">
+    <p class="t">A trend is something a lot of people want right now. What's something you've seen a lot of people wearing, using, or talking about lately?</p>
+    <p class="s">[names something]</p>
+    <p class="t">That's a trend. If someone made or sold that thing, people would probably want to buy it.</p>
+    <p class="a">Use picture cards of simple, recognizable local trend examples (powwow regalia accessories, beaded jewelry, seasonal items) — students point to or sort which ones they've seen recently.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">Fast round, no writing: I say a term, you say the definition.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>The Opportunity Is Already Around You</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. The trends we talked about today aren't somewhere else — they're happening in this community, right now. Tomorrow you start looking for the one that's yours to notice.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 3 · Day 4 — Finding a Real Need</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.3rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .workbook-box { border:2px dashed var(--lavender-dark); border-radius:10px; padding:18px 20px; margin:16px 0; background:var(--lavender-light); }
+  .workbook-box .wb-label { font-family:'Source Code Pro',monospace; font-size:.75rem; text-transform:uppercase; color:var(--lavender-dark); margin-bottom:8px; display:block; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>Finding a Real Need</h1>
+  <div class="sub">Week 3 · Day 4 — Trend-Spotting Research</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Choral Recall</div>
+  <div class="ts-di">11:00–29:00<br>DI Instruction</div>
+  <div class="ts-practice">29:00–40:00<br>Research / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Launches the Week 3 end-of-week artifact — "A need I see in my community," one paragraph, which becomes the raw material Week 4 uses to generate and validate an actual idea. Financial literacy touch: VI. Managing Risk — spotting an unmet need is a bet, not a guarantee.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Choral Recall</h2>
+<div class="script">
+  <p class="t">This week — trend means?</p>
+  <p class="cr">"A pattern in what people want."</p>
+  <p class="t">Today we stop talking about other people's trends. You go find your own.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — Finding an Unmet Need</h2>
+
+<h3 class="subsection">I Do — What Makes a Need "Unmet"</h3>
+<div class="script">
+  <p class="t">Not every need is a business opportunity — only the ones that aren't already being solved well. That's called an <span class="k">unmet need</span>. Something people deal with, want fixed, or wish existed — and right now, nobody local is doing it, or nobody's doing it well.</p>
+  <p class="a">Model your own example: something small and real, e.g., "there's nowhere close by to get X fixed quickly" or "there's no easy way for elders to get Y."</p>
+</div>
+
+<h3 class="subsection">We Do — Brainstorming Categories</h3>
+<div class="script">
+  <p class="t">Let's brainstorm categories where unmet needs tend to hide — call some out with me.</p>
+  <p class="a">Write on board without judgment: something that takes too long right now, something too expensive, something people have to travel too far for, something nobody local offers, something only certain people can access.</p>
+  <p class="t">You don't need a business idea yet. You just need to notice a real problem.</p>
+</div>
+
+<div class="note channel">
+  <span class="label">Learning Channel</span>
+  Hear/Say (category brainstorm) into Think/Write (personal reflection) — same structure as Week 1 Day 4's Key Activities brainstorm, giving students a shared starting list before they write something personal.
+</div>
+
+<h3 class="subsection">You Do — Guided Practice</h3>
+<div class="script">
+  <p class="t">Start your paragraph. What's a need you actually see — in your family, your school, or this community? Be specific. "People need more stuff" isn't specific. "There's no place close by to get a bike fixed" is specific.</p>
+</div>
+
+<div class="note comprehension">
+  <span class="label">Comprehension Tip</span>
+  Watch for vague, generic answers ("people need more jobs," "people need more money") — these are true but not usable. Push with "where exactly have you seen this? who exactly deals with this?" to get something concrete enough to build on in Week 4.
+</div>
+
+<h2 class="section">29:00–40:00 · Research Time — Two Tracks Running Concurrently</h2>
+
+<h3 class="subsection">Main Class — Drafting the Artifact</h3>
+<div class="workbook-box">
+  <span class="wb-label">Draft: A Need I See in My Community</span>
+  One paragraph, specific, real. This is rough-draft language — Day 5 finalizes it into the portfolio piece.
+</div>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "Something That Bugs Me"</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">Is there something that's hard to find, or hard to get done, near where you live?</p>
+    <p class="s">[names something]</p>
+    <p class="t">That's a real need. That could be a business idea someday.</p>
+    <p class="a">Use a simple picture-based prompt sheet with categories (something hard to find, something that takes too long, something too far away) — student picks or points to the category that fits, then names the specific thing.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">One sentence: what need did you write about today?</p>
+  <p class="a">Not Yet / Developing / Fluent per student.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>Noticing Is the First Skill</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. Every real business started with someone noticing a problem before anyone else acted on it. You just did that. Tomorrow you finish the paragraph.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 3 · Day 5 — Putting the Need Into Words</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.3rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:32px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.05rem; max-width:660px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>Putting the Need Into Words</h1>
+  <div class="sub">Week 3 · Day 5 — Portfolio Piece, Preview of Week 4</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Week 3 Recap</div>
+  <div class="ts-di">11:00–29:00<br>Finalize Paragraph</div>
+  <div class="ts-practice">29:00–40:00<br>Share Out / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Preview Week 4</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Finalizes the Week 3 end-of-week artifact — "A need I see in my community" — for the running Week 1–9 workbook section. This becomes the starting point for Week 4's idea generation and validation.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Week 3 Recap</h2>
+<div class="script">
+  <p class="t">This week: trend means?</p>
+  <p class="cr">"A pattern in what people want."</p>
+  <p class="t">Customer segment means?</p>
+  <p class="cr">"A group of people who buy the same thing."</p>
+  <p class="t">And an unmet need is a problem that's...</p>
+  <p class="cr">"Not already being solved well."</p>
+  <p class="t">Today you finish naming yours.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — Finalizing the Paragraph</h2>
+
+<h3 class="subsection">I Do — What Makes a Need Specific Enough</h3>
+<div class="script">
+  <p class="t">Yesterday I said "people need more stuff" isn't specific enough. Watch what changes when I make mine specific.</p>
+  <p class="a">Model turning a vague draft into a specific one: "People need better transportation" becomes "There's no easy way for elders in this community to get a ride to appointments when family isn't available." Point out exactly what made it specific — who, what, and why it's not already solved.</p>
+</div>
+
+<h3 class="subsection">We Do — Peer Feedback Pass</h3>
+<div class="script">
+  <p class="t">Trade workbooks. Read your partner's paragraph. Ask them: who exactly deals with this, and why isn't it already solved?</p>
+  <p class="a">Same peer error-correction structure as Week 1 Day 5 — the partner asks a question, doesn't fill in the answer.</p>
+</div>
+
+<div class="note comprehension">
+  <span class="label">Comprehension Tip</span>
+  This is the same specificity gap as Day 4 — watch for paragraphs that stayed vague overnight. The peer question ("who exactly?") is designed to catch it a second time if it wasn't caught the first.
+</div>
+
+<h3 class="subsection">You Do — Final Write</h3>
+<div class="script">
+  <p class="t">Revise your paragraph using your partner's feedback. This is the version that goes in your portfolio and becomes the starting point for next week.</p>
+</div>
+
+<h2 class="section">29:00–40:00 · Voluntary Share-Out / Two Tracks</h2>
+
+<h3 class="subsection">Main Class — Optional Share</h3>
+<p>Ask for 3–4 volunteers to read their paragraph aloud. Not mandatory.</p>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — Finishing the Week</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">This week you found something that bugs you or someone you know. Let's put it in one sentence. Near me, it is hard to [problem].</p>
+    <p class="a">Help each student assemble their own sentence orally, then support them writing or dictating it into the workbook.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check + Preview Week 4</h2>
+<div class="script">
+  <p class="t">Before you log off — next week we take the need you just named and start turning it into an actual idea. We'll test it a little too, so we're not just guessing. Bring your paragraph back Monday — you'll need it.</p>
+  <p class="a">Not Yet / Developing / Fluent — final Week 3 mark, based on the finished artifact's specificity.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>What You Named Is Real</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. What you wrote this week isn't a made-up school example — it's a real problem you actually noticed. That's the hardest part of starting a business, and you already did it. It stays in your workbook, and next week it becomes the seed of your own idea.</p>
+</div>
+
+</div>
+</body>
+</html>
