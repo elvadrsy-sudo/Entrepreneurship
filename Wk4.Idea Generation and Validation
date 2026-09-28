@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 4 · Day 1 — One Problem, Many Ideas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.3rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>One Problem, Many Ideas</h1>
+  <div class="sub">Week 4 · Day 1 — Unit III: Idea Generation &amp; Validation</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Choral Recall</div>
+  <div class="ts-di">11:00–29:00<br>DI Instruction</div>
+  <div class="ts-practice">29:00–40:00<br>Idea List / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Students generate multiple ideas against the real need they named last week — not just pick their favorite. This is the first step toward the canvas functioning as a "dashboard of hypotheses" rather than one fixed plan.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Choral Recall</h2>
+<div class="script">
+  <p class="t">Pull out your Week 3 paragraph. Read your own sentence to yourself — "Near me, it is hard to..." That's your starting point today. What is an unmet need?</p>
+  <p class="cr">"A problem that's not already being solved well."</p>
+  <p class="t">Today we don't pick one idea yet. We make a bunch.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — I Do / We Do / You Do</h2>
+
+<h3 class="subsection">I Do — One Problem, Multiple Solutions</h3>
+<div class="script">
+  <p class="t">Here's a trap a lot of first-time entrepreneurs fall into — they find a real problem, and they jump straight to the first idea that comes to mind. That's risky. A <span class="k">hypothesis</span> is just a guess you haven't tested yet — and your first idea is only one guess out of many possible ones.</p>
+  <p class="a">Model with your own Week 3-style need: e.g., "elders need rides to appointments." Generate three different possible solutions on the board — a scheduled ride service, a volunteer driver sign-up board, a partnership with an existing local service. Same problem, three different guesses.</p>
+  <p class="t">Notice — I didn't pick one yet. I just proved there's more than one way to solve the same problem.</p>
+</div>
+
+<h3 class="subsection">We Do — Stretching for More Ideas</h3>
+<div class="script">
+  <p class="t">Call out — for my example, what's a fourth idea, even a weird one?</p>
+  <p class="a">Take 2–3 more, including at least one deliberately unconventional suggestion. Praise the weird ones too — quantity matters more than quality at this stage.</p>
+  <p class="t">The goal isn't to find the perfect idea today. It's to prove to yourself you're capable of more than one guess.</p>
+</div>
+
+<div class="note channel">
+  <span class="label">Learning Channel</span>
+  Think/Say (rapid brainstorm) — deliberately fast-paced and low-stakes so students don't self-censor. Slower, evaluative thinking comes Day 2, not today.
+</div>
+
+<h3 class="subsection">You Do — Guided Practice</h3>
+<div class="script">
+  <p class="t">Using your own Week 3 need, write at least three different possible ideas that could solve it. Don't judge them yet — just get three down.</p>
+</div>
+
+<div class="note adhd">
+  <span class="label">ADHD Observation Tip</span>
+  Brainstorming can stall if a student fixates on judging their first idea before writing a second one. A simple external rule — "three ideas before you're allowed to reread any of them" — removes the decision point rather than relying on a verbal reminder each time.
+</div>
+
+<h2 class="section">29:00–40:00 · Practice — Two Tracks Running Concurrently</h2>
+
+<h3 class="subsection">Main Class — Independent Practice</h3>
+<p>Students finish their list of at least three ideas. Early finishers: circle the one that feels most interesting right now — not final, just a starting lean for Day 2.</p>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "Is It a Business, or a Favor?"</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">If you help your neighbor carry groceries for free, is that a business?</p>
+    <p class="s">[no]</p>
+    <p class="t">Right — that's a favor. What would make it a business instead?</p>
+    <p class="s">[getting paid / money]</p>
+    <p class="t">A business needs money to change hands. A favor doesn't. Both are good things to do — but only one is a business.</p>
+    <p class="a">Use two picture cards — "Favor" (a handshake, no money icon) and "Business" (money changing hands) — and sort several simple scenarios (mowing a lawn for free vs. for $10; helping a friend move vs. running a moving service) into the correct column.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">One sentence: name one of your three ideas from today.</p>
+  <p class="a">Not Yet / Developing / Fluent per student.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>Your First Idea Was Never the Only One</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. Having more than one idea isn't a sign you're unsure — it's a sign you're thinking like a real entrepreneur. Tomorrow we figure out how to actually test which one holds up.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 4 · Day 2 — Test Before You Build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.3rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>Test Before You Build</h1>
+  <div class="sub">Week 4 · Day 2 — Validation and the Minimum Viable Product</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Choral Recall</div>
+  <div class="ts-di">11:00–29:00<br>DI Instruction</div>
+  <div class="ts-practice">29:00–40:00<br>Validation Plan / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Students learn lightweight ways to test an idea before committing to it — the core of the Lean Startup approach and the Backwards Design goal of "validating, not just picking a favorite." Financial literacy touch: II. Spending — testing small first protects limited resources.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Choral Recall</h2>
+<div class="script">
+  <p class="t">Yesterday — a hypothesis is?</p>
+  <p class="cr">"A guess you haven't tested yet."</p>
+  <p class="t">And a favor versus a business — what changes it?</p>
+  <p class="cr">"Money changes hands."</p>
+  <p class="t">Today we learn how to test a guess before you spend real money on it.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — I Do / We Do / You Do</h2>
+
+<h3 class="subsection">I Do — Rock'N Outlaw Started Small</h3>
+<div class="script">
+  <p class="t">Remember Rock'N Outlaw from Week 1? They didn't start with a 30 by 60 foot building and a feed segment. They started with flowers, perfume, and jewelry — small, low-risk products. That wasn't just being modest. That was <span class="k">testing</span>.</p>
+  <p class="t">A small first version of your idea, just big enough to find out whether people really want it, is called a <span class="k">minimum viable product</span> — an <span class="k">MVP</span>. Say it with me:</p>
+  <p class="cr">"An MVP is the smallest version that still tests the idea."</p>
+  <p class="t">If people had not bought those first small products, Rock'N Outlaw would have found that out cheaply — before borrowing money for a big building.</p>
+</div>
+
+<h3 class="subsection">We Do — Four Ways to Test an Idea</h3>
+<div class="script">
+  <p class="t">Before you build anything big, there are simple ways to check whether your idea holds up. I'll name them, you repeat them:</p>
+  <p class="cr">"Ask people. Watch people. Try a small version. Look at what already exists."</p>
+  <p class="a">Give one quick example of each using your own community-need example from Day 1 (e.g., ask three elders if a ride service would help; watch how they currently get rides; run one trial week with a sign-up sheet; look at whether any existing service already covers it).</p>
+  <p class="t">Notice — none of those cost much money. That's the point.</p>
+</div>
+
+<div class="note channel">
+  <span class="label">Learning Channel</span>
+  Hear/Say (four-method chant) into See/Do (concrete example for each) — the chant gives a memorable frame, the example makes each method actionable rather than abstract.
+</div>
+
+<h3 class="subsection">You Do — Guided Practice</h3>
+<div class="script">
+  <p class="t">Circle the idea you're leaning toward from yesterday. Now write which two of the four testing methods you could actually do this week, and how.</p>
+</div>
+
+<div class="note comprehension">
+  <span class="label">Comprehension Tip</span>
+  Watch for students who name a testing method but describe something that isn't actually a test (e.g., "ask my friends" when the friends would say yes just to be nice). Push with "would they tell you if it was a bad idea?" — validating means seeking honest answers, not agreement.
+</div>
+
+<h2 class="section">29:00–40:00 · Practice — Two Tracks Running Concurrently</h2>
+
+<h3 class="subsection">Main Class — Validation Plan</h3>
+<p>Students finish their two-method testing plan. Early finishers: who specifically would you ask, and what exact question would you ask them?</p>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "Try a Little First"</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">Before you buy a lot of something, it's smart to try a little first. If you want to sell cookies, would you bake 100 cookies first, or just a few?</p>
+    <p class="s">[a few]</p>
+    <p class="t">Why?</p>
+    <p class="s">[in case nobody buys them / it costs less]</p>
+    <p class="t">That's what testing means. Try a little first. See if people want it.</p>
+    <p class="a">Use picture cards — a small tray of cookies and a giant tray of cookies. Students point to which one is the smarter first step, and explain why in their own words.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">One sentence: name one way you could test your idea this week without spending much money.</p>
+  <p class="a">Not Yet / Developing / Fluent per student.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>Starting Small Is Smart, Not Small</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. Rock'N Outlaw started with flowers and ended up building a bigger space. Starting small wasn't a weakness — it was the strategy. You have everything you need to start the same way.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 4 · Day 3 — Changing Direction Without Quitting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.2rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .fluency-table { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  .fluency-table th, .fluency-table td { border:1px solid var(--lavender); padding:9px 10px; text-align:left; }
+  .fluency-table th { background:var(--lavender-light); font-family:'Source Code Pro',monospace; font-size:.78rem; text-transform:uppercase; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>Changing Direction Without Quitting</h1>
+  <div class="sub">Week 4 · Day 3 — Precision Teaching Fluency Day + the Pivot</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Choral Recall</div>
+  <div class="ts-di">11:00–29:00<br>Pivot Mini-Lesson + Fluency Rounds</div>
+  <div class="ts-practice">29:00–40:00<br>Round 3 / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Precision Teaching day — fluency (accuracy + speed) on Week 4 vocabulary: hypothesis, validate, MVP, pivot, unmet need. "Pivot" is new today, so it gets a short I Do first. Financial literacy touch: II. Spending — pivoting early costs less than pushing a failing idea.
+</div>
+
+<div class="note iefa">
+  <span class="label">IEFA Connection</span>
+  Per the pacing map, no forced IEFA anchor this week. If a local example of a business that changed direction comes to mind (a family or community venture that shifted what it offered based on what customers wanted), it fits naturally in the pivot mini-lesson.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Choral Recall</h2>
+<div class="script">
+  <p class="t">Quick fire. Hypothesis?</p>
+  <p class="cr">"A guess you haven't tested yet."</p>
+  <p class="t">MVP?</p>
+  <p class="cr">"The smallest version that still tests the idea."</p>
+  <p class="t">Today we add one more word, then get fast with all of them.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · Pivot Mini-Lesson + Fluency Rounds</h2>
+
+<h3 class="subsection">I Do — What a Pivot Is</h3>
+<div class="script">
+  <p class="t">Say you test your idea and people say, "Not really what I need." Two choices: quit, or <span class="k">pivot</span>. A pivot means keeping the problem you care about, but changing your solution based on what you learned. Say it with me:</p>
+  <p class="cr">"A pivot is changing direction because of what you learned."</p>
+  <p class="t">Example: someone tests a ride service for elders and finds out the real problem isn't the ride, it's that nobody remembers to call and schedule one. So they pivot to a reminder-and-scheduling service instead. Same problem, different solution.</p>
+  <p class="t">A pivot isn't failing. Failing is not testing at all and finding out too late.</p>
+</div>
+
+<div class="note comprehension">
+  <span class="label">Comprehension Tip</span>
+  Students often hear "pivot" as "give up." Check for this directly: ask "did the person in my example quit, or keep going?" The answer matters more than the vocabulary definition.
+</div>
+
+<h3 class="subsection">Precision Teaching — Three-Round Fluency Structure</h3>
+<div class="script">
+  <p class="a"><span class="k">Round 1 — With Support:</span> Word wall visible (hypothesis, validate, MVP, pivot, unmet need). Call a term, students respond chorally, checking wall as needed.</p>
+  <p class="a"><span class="k">Round 2 — Without Support:</span> Cover the word wall. Timed — 60 seconds. Call terms rapid-fire, individual students respond, log speed and accuracy.</p>
+</div>
+
+<div class="fluency-table">
+  <tr><th>Round</th><th>Support</th><th>Timing</th><th>Response Mode</th></tr>
+  <tr><td>1</td><td>Word wall visible</td><td>Untimed</td><td>Choral</td></tr>
+  <tr><td>2</td><td>None</td><td>60 sec, timed</td><td>Individual, cold-call</td></tr>
+  <tr><td>3</td><td>None</td><td>Untimed</td><td>Peer partner quiz</td></tr>
+</div>
+
+<div class="note channel">
+  <span class="label">Learning Channel</span>
+  Hear/Say (chant) then Think/Say (explaining the pivot example back) — hearing the definition and then re-explaining it in their own words is what separates memorized from understood.
+</div>
+
+<div class="note adhd">
+  <span class="label">ADHD Observation Tip</span>
+  By the fourth fluency day, the routine should run mostly on its own. If a student who was calm in earlier rounds is now blurting or checked out, that's worth noticing — the routine hasn't changed, so something else may be going on that day.
+</div>
+
+<h2 class="section">29:00–40:00 · Round 3 — Peer Identification / SPED Pull-Aside</h2>
+
+<h3 class="subsection">Main Class — Round 3</h3>
+<div class="script">
+  <p class="t">Partner up, quiz each other on all five terms. If your partner's stuck, ask a question that helps them find the answer.</p>
+  <p class="a">Circulate and log Not Yet/Developing/Fluent per student based on Rounds 2 and 3 combined.</p>
+</div>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "Try Something Different"</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level. Untimed, repeated practice reps.</p>
+  <div class="sped-script">
+    <p class="t">You try selling lemonade. Nobody buys it. What could you do?</p>
+    <p class="s">[quit / try something else]</p>
+    <p class="t">You could try something different, like selling water on a hot day. You still want to sell drinks. You just changed what you sell. That's a pivot.</p>
+    <p class="a">Use picture cards — lemonade, water bottle, a sun. Have students act out or point through the steps: try it, learn something, change it.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">Fast round, no writing: I say a term, you say the definition.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>Changing Direction Is Not Quitting</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. Learning something and changing course because of it isn't weakness — it's the whole skill. You have everything you need to keep going, even when the first idea doesn't hold. Tomorrow you test yours.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 4 · Day 4 — Testing My Idea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.3rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .choice-moment { border:3px solid var(--accent-gold); border-radius:10px; padding:18px 20px; margin:16px 0; background:#FBF3E3; }
+  .choice-moment .cm-label { font-family:'Playfair Display',serif; color:var(--accent-gold); font-weight:700; font-size:1rem; margin-bottom:6px; display:block; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:30px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.02rem; max-width:640px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>Testing My Idea</h1>
+  <div class="sub">Week 4 · Day 4 — Running a Lightweight Validation</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Choral Recall</div>
+  <div class="ts-di">11:00–29:00<br>DI Instruction</div>
+  <div class="ts-practice">29:00–40:00<br>Run the Test / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Logoff</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Students put the validation plan from Day 2 into action and record what they learn — the raw evidence that feeds Friday's validated-idea artifact. Financial literacy touch: II. Spending — a quick test costs almost nothing.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Choral Recall</h2>
+<div class="script">
+  <p class="t">Four ways to test an idea — say them with me.</p>
+  <p class="cr">"Ask people. Watch people. Try a small version. Look at what already exists."</p>
+  <p class="t">And a pivot is?</p>
+  <p class="cr">"Changing direction because of what you learned."</p>
+  <p class="t">Today you actually run a test.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — Running a Test</h2>
+
+<h3 class="subsection">I Do — Asking a Question That Gets an Honest Answer</h3>
+<div class="script">
+  <p class="t">Here's where a lot of tests go wrong. If I ask "Wouldn't a ride service be great?" — nearly everyone says yes. That question hands them the answer. Watch me fix it.</p>
+  <p class="a">Model on the board: weak question ("Wouldn't this be great?") versus strong questions ("How do you get to appointments right now?" and "What's the hardest part about that?"). Point out that the strong questions ask about their real life, not their opinion of your idea.</p>
+  <p class="t">Best test question of all — <span class="k">would you actually pay for this, and how much?</span> Saying yes is free. Paying isn't.</p>
+</div>
+
+<h3 class="subsection">We Do — Fixing Weak Questions</h3>
+<div class="script">
+  <p class="t">I'll read a question. Thumbs up if it will get an honest answer, thumbs down if it just fishes for a yes.</p>
+  <p class="a">Read: "You'd love this, right?" (down) / "How do you handle this problem today?" (up) / "Isn't that a good idea?" (down) / "What would you pay for something that fixes this?" (up). Discuss any split votes and have students rewrite the weak ones.</p>
+</div>
+
+<div class="note channel">
+  <span class="label">Learning Channel</span>
+  See/Say (thumbs sort) into Think/Write (rewriting a weak question) — students evaluate someone else's question before writing their own, which is easier than starting from a blank page.
+</div>
+
+<div class="note comprehension">
+  <span class="label">Comprehension Tip</span>
+  Watch for students who rewrite a weak question by only changing a few words while it still leads the person to yes. Check whether the new question asks about the person's real life or still asks for an opinion of the idea.
+</div>
+
+<h3 class="subsection">You Do — Guided Practice</h3>
+<div class="script">
+  <p class="t">Write three honest questions you could ask a real person about your need, plus one "would you pay" question. Then ask at least two real people — classmates, family, or community members — and record what they actually said.</p>
+</div>
+
+<div class="note adhd">
+  <span class="label">ADHD Observation Tip</span>
+  Moving around the room to ask classmates is a good outlet, but it can turn into a social loop. A written target ("two answers recorded before you sit down") gives a clear finish line without relying on verbal reminders.
+</div>
+
+<h2 class="section">29:00–40:00 · Run the Test — Two Tracks Running Concurrently</h2>
+
+<h3 class="subsection">Main Class — Ask and Record</h3>
+<p>Students ask at least two people and record their honest answers word-for-word where possible. Anyone who finishes early asks a third person, ideally someone outside their usual friend group.</p>
+
+<div class="choice-moment">
+  <span class="cm-label">Choice Moment</span>
+  Students choose who to ask — classmates, a teacher, or someone they plan to ask at home tonight. Genuinely open; the best test asks someone who actually has the problem, so a student may reasonably decide to finish the test at home.
+</div>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — "Would You Pay?"</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">You make bracelets. You ask a friend, "Do you like my bracelet?" They say yes. Does that mean they will buy it?</p>
+    <p class="s">[not always / no]</p>
+    <p class="t">Right. Saying yes is easy. Paying money is the real test. So ask: "Would you buy this for $5?"</p>
+    <p class="a">Practice in pairs: one student holds a simple item, the other role-plays a customer. The seller asks, "Would you buy this for $5?" Then swap. Keep it playful and low-pressure; the goal is practicing the question, not getting a yes.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check</h2>
+<div class="script">
+  <p class="t">One sentence: what is one thing someone told you today that you didn't expect?</p>
+  <p class="a">Not Yet / Developing / Fluent per student.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>Asking Takes Courage</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. Walking up to someone and asking for an honest answer about your own idea isn't easy. You did it anyway. Tomorrow you turn what you learned into one clear statement.</p>
+</div>
+
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 4 · Day 5 — My Validated Idea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Code+Pro:wght@400;500;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #C7B8EA; --lavender-dark: #9B86D4; --lavender-light: #EDE8F9;
+    --ink: #1a1a2e; --warm-white: #F9F7FF; --accent-gold: #D4AF6A;
+    --accent-green: #7BC4A0; --accent-coral: #E88C7D;
+    --note-channel: #3d2a5c; --note-goal: #5c2a3a; --note-adhd: #b8862f;
+    --note-autism: #4a7a9e; --note-comprehension: #4a8a5c; --note-iefa: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--warm-white); color:var(--ink); font-family:'Lato',sans-serif; line-height:1.6; padding:0 0 80px; }
+  .wrap { max-width:920px; margin:0 auto; padding:40px 28px; }
+  header { background:linear-gradient(135deg,var(--lavender-dark),var(--lavender)); color:var(--warm-white); padding:44px 28px 36px; text-align:center; }
+  header .eyebrow { font-family:'Source Code Pro',monospace; letter-spacing:.14em; font-size:.78rem; text-transform:uppercase; opacity:.9; }
+  header h1 { font-family:'Playfair Display',serif; font-size:2.4rem; margin:8px 0 6px; }
+  header .sub { font-size:1.05rem; opacity:.95; }
+  .timestrip { display:flex; max-width:920px; margin:0 auto; font-family:'Source Code Pro',monospace; font-size:.72rem; color:var(--ink); }
+  .timestrip div { flex:1; padding:10px 6px; text-align:center; border-right:2px solid var(--warm-white); }
+  .timestrip div:last-child { border-right:none; }
+  .ts-login { background:var(--lavender-light); flex-grow:.8; }
+  .ts-review { background:#E3DAF5; }
+  .ts-di { background:var(--lavender); flex-grow:2.2; }
+  .ts-practice { background:var(--accent-green); color:var(--warm-white); flex-grow:1.4; }
+  .ts-exit { background:var(--accent-coral); color:var(--warm-white); flex-grow:.8; }
+  h2.section { font-family:'Playfair Display',serif; color:var(--lavender-dark); border-bottom:3px solid var(--lavender); padding-bottom:8px; margin-top:56px; font-size:1.5rem; }
+  h3.subsection { font-family:'Source Code Pro',monospace; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--lavender-light); padding:8px 14px; margin-top:32px; border-left:5px solid var(--lavender-dark); }
+  .script { background:#16162a; color:var(--warm-white); border-radius:10px; padding:22px 24px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .script p { margin:0 0 14px; } .script p:last-child { margin-bottom:0; }
+  .t { color:var(--lavender); } .t::before { content:"TEACHER: "; color:var(--lavender-dark); font-weight:600; }
+  .s { color:var(--accent-green); } .s::before { content:"STUDENTS: "; color:#5a9e78; font-weight:600; }
+  .a { color:var(--accent-gold); font-style:italic; } .a::before { content:"[ACTION] "; }
+  .k { color:var(--warm-white); font-weight:700; }
+  .cr { color:var(--accent-coral); font-weight:700; } .cr::before { content:"CHORAL CUE → "; color:#c96a5a; }
+  .note { border-radius:8px; padding:14px 18px; margin:12px 0; color:var(--warm-white); font-size:.9rem; }
+  .note .label { font-family:'Source Code Pro',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:4px; opacity:.85; }
+  .note.channel { background:var(--note-channel); } .note.goal { background:var(--note-goal); }
+  .note.adhd { background:var(--note-adhd); color:var(--ink); } .note.autism { background:var(--note-autism); }
+  .note.comprehension { background:var(--note-comprehension); } .note.iefa { background:var(--note-iefa); color:var(--ink); }
+  .sped-block { background:#EAF6EF; border:2px solid var(--accent-green); border-radius:12px; padding:24px; margin-top:18px; }
+  .sped-block h3.subsection { background:var(--accent-green); color:var(--warm-white); border-left-color:#4a8a5c; }
+  .sped-script { background:var(--warm-white); border:1px solid var(--accent-green); border-radius:8px; padding:16px 18px; font-family:'Source Code Pro',monospace; font-size:.92rem; }
+  .sped-script .t { color:var(--note-comprehension); } .sped-script .t::before { color:#3a6a4a; }
+  .sped-script .s { color:#2f7a4a; }
+  .frame { background:#fff; border:2px solid var(--lavender-dark); border-radius:10px; padding:16px 20px; margin:14px 0; font-family:'Source Code Pro',monospace; font-size:.9rem; line-height:2; }
+  .identity { background:linear-gradient(135deg,var(--ink),#2d2350); color:var(--warm-white); border-radius:14px; padding:32px 32px; margin-top:48px; text-align:center; }
+  .identity h3 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-top:0; color:var(--accent-gold); }
+  .identity p { font-size:1.05rem; max-width:660px; margin:0 auto; }
+  .identity .cap { font-weight:900; }
+  table.assess { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  table.assess th, table.assess td { border:1px solid var(--lavender); padding:8px 10px; text-align:left; }
+  table.assess th { background:var(--lavender-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Entrepreneurship · Browning High School</div>
+  <h1>My Validated Idea</h1>
+  <div class="sub">Week 4 · Day 5 — Portfolio Piece, Preview of Week 5</div>
+</header>
+
+<div class="timestrip">
+  <div class="ts-login">0:00–8:00<br>Login + Typing</div>
+  <div class="ts-review">8:00–11:00<br>Week 4 Recap</div>
+  <div class="ts-di">11:00–29:00<br>Write the Three Sentences</div>
+  <div class="ts-practice">29:00–40:00<br>Share Out / SPED Pull-Aside</div>
+  <div class="ts-exit">40:00–45:00<br>Exit + Preview Week 5</div>
+</div>
+
+<div class="wrap">
+
+<div class="note goal">
+  <span class="label">Unit Goal Connection</span>
+  Finalizes the Week 4 end-of-week artifact — one validated idea in three sentences: the problem, my idea, and the reason my customers choose me. It goes into the running Week 1–9 workbook section and becomes the foundation for Week 5's Value Proposition work.
+</div>
+
+<h2 class="section">0:00–8:00 · Login &amp; Typing Practice</h2>
+<p>Standard routine.</p>
+
+<h2 class="section">8:00–11:00 · Week 4 Recap</h2>
+<div class="script">
+  <p class="t">This week: hypothesis means?</p>
+  <p class="cr">"A guess you haven't tested yet."</p>
+  <p class="t">MVP?</p>
+  <p class="cr">"The smallest version that still tests the idea."</p>
+  <p class="t">Pivot?</p>
+  <p class="cr">"Changing direction because of what you learned."</p>
+  <p class="t">Today, you turn what you learned into three clear sentences.</p>
+</div>
+
+<h2 class="section">11:00–29:00 · DI Instruction — The Three Sentences</h2>
+
+<h3 class="subsection">I Do — Modeling the Three Sentences</h3>
+<div class="script">
+  <p class="t">Three sentences. One: the problem. Two: my idea. Three: the reason my customers choose me. Watch me build mine from my test results.</p>
+  <p class="a">Model with your own example: "Elders in this community often can't get to appointments when family isn't available. My idea is a volunteer ride sign-up board run through the senior center. Customers choose it because it's free, local, and run by people they already know."</p>
+  <p class="t">Notice the third sentence uses something I actually learned in my test. It isn't a guess.</p>
+</div>
+
+<h3 class="subsection">We Do — Strengthening the Third Sentence</h3>
+<div class="script">
+  <p class="t">Read this third sentence with me: "Customers choose it because it's good." Strong or weak?</p>
+  <p class="s">[weak — not specific]</p>
+  <p class="t">Right. Good how? Compared to what? What did people actually tell you in your test?</p>
+  <p class="a">Have students offer specific replacements. Point back to what people said on Day 4 — the strongest "reason customers choose me" comes from real answers, not from what the student hoped they would say.</p>
+</div>
+
+<div class="frame">
+  Sentence 1 — The problem: ______________________________<br>
+  Sentence 2 — My idea: ______________________________<br>
+  Sentence 3 — Customers choose me because: ______________________________
+</div>
+
+<div class="note comprehension">
+  <span class="label">Comprehension Tip</span>
+  Check whether sentence 3 connects to something a real person actually said during the test, or whether the student wrote a hope. If a test result didn't support the idea, that's a valid finding — encourage a pivot statement in sentence 2 rather than ignoring the result.
+</div>
+
+<h3 class="subsection">You Do — Final Write</h3>
+<div class="script">
+  <p class="t">Write your three sentences. If your test told you something surprising, let it change your idea — that's the whole point of testing.</p>
+</div>
+
+<h2 class="section">29:00–40:00 · Voluntary Share-Out / Two Tracks</h2>
+
+<h3 class="subsection">Main Class — Optional Share</h3>
+<p>Ask for 3–4 volunteers to read their three sentences aloud. Not mandatory.</p>
+
+<div class="sped-block">
+  <h3 class="subsection">SPED Pull-Aside — Finishing the Week</h3>
+  <p style="margin-top:0;"><strong>Format:</strong> One small group, teacher-led, 2nd-grade reading level.</p>
+  <div class="sped-script">
+    <p class="t">This week you learned to try a little first, ask real questions, and change your plan if you need to. Let's put your idea in words. The problem is ____. My idea is ____. People would pay because ____.</p>
+    <p class="a">Help each student say it out loud first, then support them writing or dictating it. Accept simple answers; the goal is the habit of naming problem, idea, and reason.</p>
+  </div>
+</div>
+
+<h2 class="section">40:00–45:00 · Exit Check + Preview Week 5</h2>
+<div class="script">
+  <p class="t">Before you log off — next week we work on the words and plan for getting your idea in front of the right people. Who is it really for, and how will they find out about it? Bring your three sentences Monday.</p>
+  <p class="a">Not Yet / Developing / Fluent — final Week 4 mark, based on the finished artifact's specificity and use of test results.</p>
+</div>
+
+<table class="assess">
+  <tr><th>Student</th><th>Not Yet</th><th>Developing</th><th>Fluent</th></tr>
+  <tr><td colspan="4" style="color:#888;">(roster rows — printed version)</td></tr>
+</table>
+
+<div class="identity">
+  <h3>This Idea Has Been Tested</h3>
+  <p><span class="cap">Important names are capitalized</span> — and you are an important person. Most people never test their ideas. You did. What's in your workbook now isn't a guess anymore — it's something you checked with real people. You have everything you need to keep building it.</p>
+</div>
+
+</div>
+</body>
+</html>
